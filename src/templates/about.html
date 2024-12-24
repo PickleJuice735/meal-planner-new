@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a> |
+        <a href="{{ url_for('about') }}" class="active">About Us</a>
+    </nav>
+
+    <!-- Page Title -->
+    <h1>About Us</h1>
+    <p>Meet the creators of the Meal Planner app!</p>
+
+    <!-- Team Members -->
+    <div class="team-container">
+        <div class="team-member">
+            <img src="{{ url_for('static', filename='person1.jpg') }}" alt="Team Member 1">
+            <h2>Elisha Richler</h2>
+            <p>Co-Founder & Developer</p>
+        </div>
+        <div class="team-member">
+            <img src="{{ url_for('static', filename='person2.jpg') }}" alt="Team Member 2">
+            <h2>Erel Arbiv</h2>
+            <p>Co-Founder & Nutrition Specialist</p>
+        </div>
+        <div class="team-member">
+            <img src="{{ url_for('static', filename='person3.jpg') }}" alt="Team Member 3">
+            <h2>Ori Shemesh</h2>
+            <p>Co-Founder & Designer</p>
+        </div>
+    </div>
+</body>
+</html>

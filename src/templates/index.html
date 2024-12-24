@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Planner</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+    <a href="{{ url_for('home') }}" class="active">Home</a> |
+    <a href="{{ url_for('about') }}">About Us</a>
+</nav>
+
+
+    <!-- Page Title -->
+    <h1>Meal Planner</h1>
+    <p>
+        At <strong>Healthy Life Solutions</strong>, we provide innovative tools to help individuals
+        and families plan balanced meals efficiently. Our meal planner suggests personalized
+        meal options based on your dietary preferences, nutritional needs, and budget.
+        Start optimizing your meals today for a healthier tomorrow!
+    </p>
+
+    <!-- Form -->
+    <form action="/generate" method="POST">
+        <label for="min_fat">Minimum Fat (g):</label>
+        <input type="number" id="min_fat" name="min_fat" required>
+
+        <label for="min_protein">Minimum Protein (g):</label>
+        <input type="number" id="min_protein" name="min_protein" required>
+
+        <label for="min_carbs">Minimum Carbs (g):</label>
+        <input type="number" id="min_carbs" name="min_carbs" required>
+
+        <label for="diet_type">Diet Type:</label>
+        <select id="diet_type" name="diet_type">
+            <option value="none">None</option>
+            <option value="vegan">Vegan</option>
+            <option value="vegetarian">Vegetarian</option>
+            <option value="low carb">Low Carb</option>
+            <option value="high carb">High Carb</option>
+        </select>
+
+        <h3>Allergies:</h3>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="milk"> Milk</label>
+            <label><input type="checkbox" name="eggs"> Eggs</label>
+            <label><input type="checkbox" name="gluten"> Gluten</label>
+            <label><input type="checkbox" name="fish"> Fish</label>
+            <label><input type="checkbox" name="meat"> Meat</label>
+            <label><input type="checkbox" name="nuts"> Nuts</label>
+        </div>
+
+        <button type="submit">Generate Meal Plan</button>
+    </form>
+</body>
+</html>

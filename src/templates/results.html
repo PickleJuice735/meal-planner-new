@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meal Plan Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Optimal Meal Plan</h1>
+    <ul>
+        {% for result in results %}
+            <li>{{ result.name }}: {{ result.servings }} servings (Cost: {{ result.price }})</li>
+        {% endfor %}
+    </ul>
+    <p><strong>Total Cost:</strong> {{ total_cost }}</p>
+    <a href="/">Go Back</a>
+</body>
+</html>
