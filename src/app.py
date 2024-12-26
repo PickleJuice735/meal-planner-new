@@ -8,11 +8,9 @@ from threading import Timer
 
 # Initialize Flask app
 app = Flask(__name__)
-# Dynamically get the directory of the current file (app.py)
-current_dir = os.path.dirname(os.path.abspath(__file__))
-csv_path = os.path.join(current_dir, 'food_test.csv')
+
 # Load the food database
-FOODS = pd.read_csv('food_test.csv')
+FOODS = pd.read_csv('src/food_test.csv')
 
 
 @app.route('/')
