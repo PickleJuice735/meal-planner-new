@@ -9,7 +9,7 @@ from threading import Timer
 app = Flask(__name__)
 
 # Load the food database
-FOODS = pd.read_csv('food_test.csv')
+FOODS = pd.read_csv('src/food_test.csv')
 
 @app.route('/')
 def home():
