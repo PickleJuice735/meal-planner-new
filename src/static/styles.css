@@ -11,6 +11,9 @@ body {
 h1 {
     color: #00796b; /* Dark turquoise */
 }
+h2 {
+color: #00796b; /* Dark turquoise */
+}
 
 /* Team container */
 .team-container {
@@ -47,4 +50,127 @@ h1 {
 .team-member p {
     font-size: 14px;
     color: #555;
+}
+
+/* ===== Form Styling ===== */
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Flexbox container for form rows */
+.form-row {
+    display: flex;
+    align-items: center; /* Aligns label and input vertically */
+    justify-content: space-between;
+    margin-bottom: 15px; /* Spacing between rows */
+}
+
+/* Label styling */
+label {
+    margin-right: 10px;
+    font-weight: bold;
+    white-space: nowrap;
+    flex: 1;
+    text-align: left; /* Aligns label text to the left */
+}
+
+/* Input and select styling */
+input[type="number"], select {
+    width: 60%; /* Adjust width for consistent layout */
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    flex: 2;
+    align: right;
+}
+
+/* Tooltip styling */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: #ffffff;
+    color: #333;
+    text-align: center;
+    border-radius: 8px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Adjust tooltip position */
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Checkbox group styling */
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* Button styling */
+button[type="submit"] {
+    background-color: #00796b;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #00594d;
+}
+/* Tooltip styling */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    color: #00796b; /* Match the heading color */
+    text-decoration: underline;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: #ffffff;
+    color: #333;
+    text-align: center;
+    border-radius: 8px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position tooltip above the question mark */
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
 }

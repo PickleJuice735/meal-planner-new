@@ -5,13 +5,11 @@ import os
 import webbrowser
 from threading import Timer
 
-
 # Initialize Flask app
 app = Flask(__name__)
 
 # Load the food database
-FOODS = pd.read_csv('src/food_test.csv')
-
+FOODS = pd.read_csv('food_test.csv')
 
 @app.route('/')
 def home():
@@ -78,28 +76,43 @@ def generate_meal_plan():
         max_servings = 3
         for i in foods.index:
             prob += food_vars[i] <= max_servings
+
         # Solve the problem
         prob.solve()
 
-        # Generate results
+        # Generate results and calculate totals
         results = []
         total_cost = 0
+        total_fats = 0
+        total_carbs = 0
+        total_proteins = 0
+
         for i in foods.index:
             if food_vars[i].varValue > 0:
+                servings = food_vars[i].varValue
                 results.append({
                     'name': foods.loc[i, 'name'],
-                    'servings': food_vars[i].varValue,
+                    'servings': servings,
                     'price': foods.loc[i, 'price']
                 })
-                total_cost += food_vars[i].varValue * foods.loc[i, 'price']
+                total_cost += servings * foods.loc[i, 'price']
+                total_fats += servings * foods.loc[i, 'fat']
+                total_carbs += servings * foods.loc[i, 'carbs']
+                total_proteins += servings * foods.loc[i, 'protein']
 
         # Render the results in HTML
-        return render_template('results.html', results=results, total_cost=total_cost)
+        return render_template(
+            'results.html',
+            results=results,
+            total_cost=round(total_cost, 2),
+            total_fats=round(total_fats, 2),
+            total_carbs=round(total_carbs, 2),
+            total_proteins=round(total_proteins, 2)
+        )
 
     except Exception as e:
         # Handle errors and show them in the UI
         return jsonify({'error': str(e)}), 400
-
 
 if __name__ == '__main__':
     # Only open the browser if running in the main process

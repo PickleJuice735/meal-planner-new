@@ -17,10 +17,18 @@
     <h1>Optimal Meal Plan</h1>
     <ul>
         {% for result in results %}
-            <li>{{ result.name }}: {{ result.servings }} servings (Cost: {{ result.price }})</li>
+            <li>{{ result.name }}: {{ "%.2f" | format(result.servings) }} servings (Cost: {{ "%.2f" | format(result.price) }} NIS)</li>
         {% endfor %}
     </ul>
-    <p><strong>Total Cost:</strong> {{ total_cost }}</p>
-    <a href="/">Go Back</a>
+    <p><strong>Total Cost:</strong> {{ "%.2f" | format(total_cost) }} NIS</p>
+    <p><strong>Total Fats:</strong> {{ "%.2f" | format(total_fats) }} g</p>
+    <p><strong>Total Carbs:</strong> {{ "%.2f" | format(total_carbs) }} g</p>
+    <p><strong>Total Proteins:</strong> {{ "%.2f" | format(total_proteins) }} g</p>
+
+    <!-- Print Results Button -->
+    <button onclick="window.print()">Print Results</button>
+
+    <!-- Go Back Link -->
+    <br><br><br><a href="/">Go Back</a>
 </body>
 </html>

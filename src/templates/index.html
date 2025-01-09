@@ -5,24 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meal Planner</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-
 </head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-1EJ5W51PW6"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-1EJ5W51PW6');
-</script>
 <body>
     <!-- Navigation -->
     <nav>
-    <a href="{{ url_for('home') }}" class="active">Home</a> |
-    <a href="{{ url_for('about') }}">About Us</a>
-</nav>
-
+        <a href="{{ url_for('home') }}" class="active">Home</a> |
+        <a href="{{ url_for('about') }}">About Us</a>
+    </nav>
 
     <!-- Page Title -->
     <h1>Meal Planner</h1>
@@ -35,16 +24,26 @@
 
     <!-- Form -->
     <form action="/generate" method="POST">
+     <h2>Your Plan</h2>
         <label for="min_fat">Minimum Fat (g):</label>
         <input type="number" id="min_fat" name="min_fat" required>
+        <span class="tooltip">?
+            <span class="tooltiptext">Enter the minimum amount of fats (in grams) you'd like in your meal plan.</span>
+        </span>
 
         <label for="min_protein">Minimum Protein (g):</label>
         <input type="number" id="min_protein" name="min_protein" required>
+        <span class="tooltip">?
+            <span class="tooltiptext">Enter the minimum amount of proteins (in grams) you'd like in your meal plan.</span>
+        </span>
 
         <label for="min_carbs">Minimum Carbs (g):</label>
         <input type="number" id="min_carbs" name="min_carbs" required>
+        <span class="tooltip">?
+            <span class="tooltiptext">Enter the minimum amount of carbohydrates (in grams) you'd like in your meal plan.</span>
+        </span>
 
-        <label for="diet_type">Diet Type:</label>
+        <br><label for="diet_type">Diet Type:</label>
         <select id="diet_type" name="diet_type">
             <option value="none">None</option>
             <option value="vegan">Vegan</option>
@@ -63,14 +62,15 @@
             <label><input type="checkbox" name="nuts"> Nuts</label>
         </div>
 
-        <button type="submit">Generate Meal Plan</button>
+        <br><button type="submit">Generate Meal Plan</button>
     </form>
-<footer>
-    <p>We value your feedback! Please take a moment to share your thoughts with us:</p>
-    <a href="https://forms.gle/NxsH8Un5Ayg7RHrx6" target="_blank" style="color: blue; text-decoration: underline;">
-        Click here to leave feedback
-    </a>
-</footer>
 
+    <!-- Footer -->
+    <footer>
+        <p>We value your feedback! Please take a moment to share your thoughts with us:</p>
+        <a href="https://forms.gle/NxsH8Un5Ayg7RHrx6" target="_blank" class="feedback-link">
+            Click here to leave feedback
+        </a>
+    </footer>
 </body>
 </html>
