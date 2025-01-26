@@ -8,13 +8,71 @@ from threading import Timer
 # Initialize Flask app
 app = Flask(__name__)
 
+# Nutrient calculator logic
+def calculate_nutrient_needs(weight_kg, height_cm, age, sex, activity_level):
+    # Calculate Basal Energy Expenditure (BEE) using Harris-Benedict Equation
+    if sex == 'male':
+        bee = 66.5 + (13.8 * weight_kg) + (5.0 * height_cm) - (6.8 * age)
+    elif sex == 'female':
+        bee = 655.1 + (9.6 * weight_kg) + (1.9 * height_cm) - (4.7 * age)
+    else:
+        return None
+
+    # Adjust BEE for activity level
+    total_calories = bee * activity_level
+
+    # Protein needs (0.8 to 1.0 g per kg of body weight)
+    protein_min = 0.8 * weight_kg
+    protein_max = 1.0 * weight_kg
+
+    # Fat needs (30% of total daily calories)
+    fat_calories = 0.30 * total_calories
+    fat_grams = fat_calories / 9  # 1 gram of fat = 9 calories
+
+    # Carbohydrate needs (45% to 65% of total daily calories)
+    carb_min_calories = 0.45 * total_calories
+    carb_max_calories = 0.65 * total_calories
+    carb_min_grams = carb_min_calories / 4  # 1 gram of carbohydrate = 4 calories
+    carb_max_grams = carb_max_calories / 4
+
+    return {
+        'total_calories': total_calories,
+        'fat_g': fat_grams,
+        'protein_min_g': protein_min,
+        'protein_max_g': protein_max,
+        'carb_min_g': carb_min_grams,
+        'carb_max_g': carb_max_grams
+    }
+
+# Route for the nutrient calculator
+@app.route('/calculator', methods=['GET', 'POST'])
+def calculator():
+    result = None
+    if request.method == 'POST':
+        try:
+            weight_kg = float(request.form['weight_kg'])
+            height_cm = float(request.form['height_cm'])
+            age = int(request.form['age'])
+            sex = request.form['sex']
+            activity_level = float(request.form['activity_level'])
+
+            if weight_kg > 0 and height_cm > 0 and age > 0 and activity_level > 0:
+                result = calculate_nutrient_needs(weight_kg, height_cm, age, sex, activity_level)
+            else:
+                result = "Please enter valid values greater than zero."
+        except ValueError:
+            result = "Invalid input. Please ensure all fields are filled correctly."
+    return render_template('calculator.html', result=result)
+
 # Load the food database
-FOODS = pd.read_csv('src/food_test.csv')
+FOODS = pd.read_csv('food_test.csv')
 
 @app.route('/')
 def home():
     """Render the homepage with the input form."""
-    return render_template('index.html')
+    # Pass the list of foods to populate the dropdown options
+    food_names = FOODS['name'].tolist()
+    return render_template('index.html', food_names=food_names)
 
 @app.route('/about.html')
 def about():
@@ -44,6 +102,10 @@ def generate_meal_plan():
             "Nuts": request.form.get('nuts') == 'on'
         }
 
+        # Retrieve scroll-down selections for including and excluding foods
+        include_foods = request.form.getlist('include_foods')
+        exclude_foods = request.form.getlist('exclude_foods')
+
         # Filter foods based on dietary preferences
         foods = FOODS.copy()
         if diet_type == 'vegan':
@@ -60,9 +122,23 @@ def generate_meal_plan():
             if has_allergy:
                 foods = foods[foods[f"contains_{allergy.lower()}"] == False]
 
+        # Exclude foods from the exclude_foods list
+        if exclude_foods:
+            foods = foods[~foods['name'].isin(exclude_foods)]
+
+        # Ensure foods are available for optimization
+        if foods.empty:
+            return "No foods available based on your selections. Please adjust your preferences."
+
         # Create the LP problem
         prob = LpProblem("Meal Planning", LpMinimize)
         food_vars = LpVariable.dicts("Food", foods.index, lowBound=0, cat='Continuous')
+
+        # Force inclusion of foods in the include_foods list
+        if include_foods:
+            included_indices = foods[foods['name'].isin(include_foods)].index
+            for idx in included_indices:
+                prob += food_vars[idx] >= 1  # Ensure at least 1 serving of each included food
 
         # Objective: Minimize the total price
         prob += lpSum([food_vars[i] * foods.loc[i, 'price'] for i in foods.index])
@@ -116,7 +192,6 @@ def generate_meal_plan():
 
 if __name__ == '__main__':
     # Only open the browser if running in the main process
-    import os
     if os.environ.get("WERKZEUG_RUN_MAIN") == "true":
         Timer(1, open_browser).start()
     app.run(debug=True)

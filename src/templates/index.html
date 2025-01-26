@@ -22,9 +22,14 @@
         Start optimizing your meals today for a healthier tomorrow!
     </p>
 
+    <h2>Have a problem knowing your measurements?</h2>
+    <p>Here's a calculator to calculate your proteins, fats, and carbs:</p>
+    <a href="/calculator" target="_blank" class="button">Open Calculator</a>
+
     <!-- Form -->
     <form action="/generate" method="POST">
-     <h2>Your Plan</h2>
+        <h2>Your Plan</h2>
+
         <label for="min_fat">Minimum Fat (g):</label>
         <input type="number" id="min_fat" name="min_fat" required>
         <span class="tooltip">?
@@ -43,7 +48,8 @@
             <span class="tooltiptext">Enter the minimum amount of carbohydrates (in grams) you'd like in your meal plan.</span>
         </span>
 
-        <br><label for="diet_type">Diet Type:</label>
+        <br>
+        <label for="diet_type">Diet Type:</label>
         <select id="diet_type" name="diet_type">
             <option value="none">None</option>
             <option value="vegan">Vegan</option>
@@ -62,7 +68,36 @@
             <label><input type="checkbox" name="nuts"> Nuts</label>
         </div>
 
-        <br><button type="submit">Generate Meal Plan</button>
+        <!-- More Options Section -->
+        <br>
+        <button type="button" id="toggle-options" class="button">More Options</button>
+
+        <div id="additional-options" class="hidden">
+            <br>
+            <label for="include_foods">Foods to Include:</label>
+            <span class="tooltip">?
+                <span class="tooltiptext">Hold Ctrl (Cmd on Mac) and click to select multiple foods to include in your meal plan.</span>
+            </span>
+            <select id="include_foods" name="include_foods" multiple>
+                {% for food in food_names %}
+                <option value="{{ food }}">{{ food }}</option>
+                {% endfor %}
+            </select>
+
+            <br><br>
+            <label for="exclude_foods">Foods to Exclude:</label>
+            <span class="tooltip">?
+                <span class="tooltiptext">Hold Ctrl (Cmd on Mac) and click to select multiple foods to exclude in your meal plan.</span>
+            </span>
+            <select id="exclude_foods" name="exclude_foods" multiple>
+                {% for food in food_names %}
+                <option value="{{ food }}">{{ food }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <br><br><br>
+        <button type="submit">Generate Meal Plan</button>
     </form>
 
     <!-- Footer -->
@@ -72,5 +107,13 @@
             Click here to leave feedback
         </a>
     </footer>
+
+    <!-- JavaScript for toggling visibility -->
+    <script>
+        document.getElementById('toggle-options').addEventListener('click', () => {
+            const optionsDiv = document.getElementById('additional-options');
+            optionsDiv.classList.toggle('hidden');
+        });
+    </script>
 </body>
 </html>

@@ -8,11 +8,17 @@ body {
 }
 
 /* Heading styling */
-h1 {
-    color: #00796b; /* Dark turquoise */
+h1, h2 {
+    color: #00796b; /* Dark turquoise for headings */
 }
+
+h1 {
+    font-size: 2.5em;
+}
+
 h2 {
-color: #00796b; /* Dark turquoise */
+    font-size: 2em;
+    margin-top: 20px;
 }
 
 /* Team container */
@@ -65,9 +71,9 @@ form {
 /* Flexbox container for form rows */
 .form-row {
     display: flex;
-    align-items: center; /* Aligns label and input vertically */
+    align-items: center; /* Align label and input vertically */
     justify-content: space-between;
-    margin-bottom: 15px; /* Spacing between rows */
+    margin-bottom: 15px; /* Space between rows */
 }
 
 /* Label styling */
@@ -76,25 +82,26 @@ label {
     font-weight: bold;
     white-space: nowrap;
     flex: 1;
-    text-align: left; /* Aligns label text to the left */
+    text-align: left;
 }
 
 /* Input and select styling */
-input[type="number"], select {
-    width: 60%; /* Adjust width for consistent layout */
-    padding: 5px;
+input[type="number"],
+select {
+    width: 60%; /* Consistent width for inputs and selects */
+    padding: 8px;
     border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-    flex: 2;
-    align: right;
 }
 
 /* Tooltip styling */
 .tooltip {
     position: relative;
     display: inline-block;
-    margin-left: 5px;
+    cursor: pointer;
+    color: #00796b; /* Match the heading color */
+    text-decoration: underline;
 }
 
 .tooltip .tooltiptext {
@@ -129,7 +136,8 @@ input[type="number"], select {
 }
 
 /* Button styling */
-button[type="submit"] {
+button[type="submit"],
+button.button {
     background-color: #00796b;
     color: #ffffff;
     border: none;
@@ -137,40 +145,75 @@ button[type="submit"] {
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease;
 }
 
-button[type="submit"]:hover {
+button[type="submit"]:hover,
+button.button:hover {
     background-color: #00594d;
 }
-/* Tooltip styling */
-.tooltip {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    color: #00796b; /* Match the heading color */
+
+/* Styling for multi-select dropdowns */
+select[multiple] {
+    width: 100%;
+    height: 150px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 5px;
+    background-color: #f9f9f9;
+    color: #333;
+    font-size: 14px;
+    overflow-y: auto;
+}
+
+select[multiple] option {
+    padding: 5px;
+    background-color: #ffffff;
+    color: #333;
+}
+
+/* Notes or additional information styling */
+.note {
+    font-size: 12px;
+    color: #555;
+    margin-top: 5px;
+}
+
+/* Footer Styling */
+footer {
+    margin-top: 30px;
+    padding: 10px 0;
+    background-color: #00796b;
+    color: #ffffff;
+    text-align: center;
+    font-size: 14px;
+}
+
+footer a.feedback-link {
+    color: #fff;
     text-decoration: underline;
 }
 
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 200px;
-    background-color: #ffffff;
-    color: #333;
-    text-align: center;
-    border-radius: 8px;
-    padding: 10px;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%; /* Position tooltip above the question mark */
-    left: 50%;
-    margin-left: -100px;
-    opacity: 0;
-    transition: opacity 0.3s;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+footer a.feedback-link:hover {
+    color: #cce7e4;
+}
+.hidden {
+    display: none;
+}
+/* Styling for the "More Options" button */
+#toggle-options {
+    background-color: #cccccc; /* Light gray */
+    color: #333333; /* Dark gray text */
+    border: none;
+    padding: 5px 10px; /* Smaller padding for a smaller button */
+    border-radius: 4px; /* Slightly rounded corners */
+    font-size: 14px; /* Slightly smaller font size */
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
+/* Hover effect for "More Options" button */
+#toggle-options:hover {
+    background-color: #aaaaaa; /* Darker gray on hover */
 }
+
