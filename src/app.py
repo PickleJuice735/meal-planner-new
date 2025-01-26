@@ -65,7 +65,7 @@ def calculator():
     return render_template('calculator.html', result=result)
 
 # Load the food database
-FOODS = pd.read_csv('food_test.csv')
+FOODS = pd.read_csv('src/food_test.csv')
 
 @app.route('/')
 def home():
